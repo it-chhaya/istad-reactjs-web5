@@ -7,6 +7,9 @@ import Login from './pages/Login';
 import MainFooter from './components/MainFooter';
 import LatestBook from './pages/LatestBook';
 import Genre from './pages/Genre';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -16,7 +19,10 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/latest-book' element={<LatestBook />} />
         <Route path='/genres' element={<Genre />} />
+        <Route path='/about-us' element={<AboutUs />} />
+        <Route path='/contact-us' element={<ContactUs />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
       <MainFooter />
     </div>

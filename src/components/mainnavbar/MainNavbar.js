@@ -2,6 +2,7 @@ import './MainNavbar.css'
 import { Container, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import BrandLogo from '../../assets/brandlogo/book-logo.svg'
+import { DoorOpenFill, PersonCircle } from 'react-bootstrap-icons'
 
 const MainNavbar = () => {
 	return (
@@ -27,14 +28,14 @@ const MainNavbar = () => {
 								</Link>
 							</li>
 							<li>
-								<a href="#" className="nav-link px-2 link-dark">
+								<Link to={'/contact-us'} className="nav-link px-2 link-dark">
 									Contact Us
-								</a>
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="nav-link px-2 link-dark">
+								<Link to={'/about-us'} className="nav-link px-2 link-dark">
 									About Us
-								</a>
+								</Link>
 							</li>
 						</ul>
 
@@ -50,8 +51,13 @@ const MainNavbar = () => {
 						</form>
 
 						<ul className="nav col-12 col-lg-auto mb-2 mb-md-0">
-							<li>
+							<li className="d-flex align-items-center">
+								<PersonCircle />
 								<Link to={'/login'} className="nav-link px-2 link-secondary">Log in</Link>
+							</li>
+							<li className="d-flex align-items-center">
+								<DoorOpenFill />
+								<Link to={'/register'} className="nav-link px-2 link-secondary">Register</Link>
 							</li>
 						</ul>
 
