@@ -1,7 +1,11 @@
+import { Container } from 'react-bootstrap'
+
 const ContactUs = () => {
-    return (
-        <h1>ContactUs</h1>
-    )
+	return (
+		<Container>
+			<h1>ContactUs</h1>
+		</Container>
+	)
 }
 
 export default ContactUs
