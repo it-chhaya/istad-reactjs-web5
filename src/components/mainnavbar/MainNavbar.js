@@ -55,12 +55,8 @@ const MainNavbar = () => {
 								<PersonCircle />
 								<Link to={'/login'} className="nav-link px-2 link-secondary">Log in</Link>
 							</li>
-<<<<<<< HEAD
-							<li>
-=======
 							<li className="d-flex align-items-center">
 								<DoorOpenFill />
->>>>>>> 308136d813d30ac5fb5ac9512b622b6b5afc9ec1
 								<Link to={'/register'} className="nav-link px-2 link-secondary">Register</Link>
 							</li>
 						</ul>

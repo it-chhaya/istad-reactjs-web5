@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { login, register } from '../services/authService'
+import { useNavigate } from 'react-router-dom'
+import { register, sendEmailVerification } from '../services/authService'
+import { uploadFile } from '../services/fileService'
 
 const FormRegister = () => {
 
+	const navigate = useNavigate()
 	const [data, setData] = useState({})
 
 	const onValueChangeHandler = (e) => {
@@ -17,16 +20,43 @@ const FormRegister = () => {
 		})
 	}
 
+	const changeFileHandler = (e) => {
+		const formData = new FormData()
+		formData.append('file', e.target.files[0])
+
+		uploadFile(formData).then((json) => (data.profileId = json.data.id))
+	}
+
 	const onRegisterHandler = (e) => {
+
 		e.preventDefault()
 
-		data.profileId = 167
 		data.roleIds = [3]
 
 		console.log(data)
 
 		register(data)
-		login(data)
+		.then(res => res.json())
+		.then(json => {
+
+			if (json.code === 200) {
+
+				sendEmailVerification({email: json.data.email})
+				.then(res => res.json())
+				.then(json => {
+					if (json.code === 200) {
+						navigate('/login', {
+							state: {
+								isRegister: true
+							}
+						})
+					}
+				})
+
+			} else if (json.code === 400) {
+				console.log(json)
+			}
+		})
 	}
 
 	return (
@@ -120,13 +150,21 @@ const FormRegister = () => {
 							className="mb-3"
 							controlId="exampleForm.ControlTextarea1">
 							<Form.Label>Biography</Form.Label>
-							<Form.Control name="biography"
-								onChange={onValueChangeHandler} as="textarea" rows={4} />
+							<Form.Control
+								name="biography"
+								onChange={onValueChangeHandler}
+								as="textarea"
+								rows={4}
+							/>
 						</Form.Group>
 
 						<Form.Group controlId="formFile" className="mb-3">
 							<Form.Label>Profile</Form.Label>
-							<Form.Control type="file" />
+							<Form.Control
+								onChange={changeFileHandler}
+								name="file"
+								type="file"
+							/>
 						</Form.Group>
 					</Col>
 				</Row>

@@ -1,8 +1,17 @@
+import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
 import FormLogin from "../components/FormLogin"
 
 const Login = () => {
+
+	const location = useLocation()
+
+	useEffect(() => {
+		// Your initialization
+	}, [])
+
 	return (
-		<FormLogin />
+		<FormLogin isRegister={location.state && location.state.isRegister} />
 	)
 }
 
