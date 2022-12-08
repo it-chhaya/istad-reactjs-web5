@@ -3,8 +3,13 @@ import { Container, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import BrandLogo from '../../assets/brandlogo/book-logo.svg'
 import { DoorOpenFill, PersonCircle } from 'react-bootstrap-icons'
+import { useSelector } from 'react-redux'
 
 const MainNavbar = () => {
+
+	const { isLoggedIn } = useSelector(state => state.AUTH_REDUCER)
+	const { auth } = useSelector(state => state.AUTH_REDUCER)
+
 	return (
 		<Container fluid className="px-0">
 			<header className="p-3 mb-3 border-bottom">
@@ -13,12 +18,18 @@ const MainNavbar = () => {
 						<Link
 							to={'/'}
 							className="d-flex align-items-center mb-2 mb-lg-0 me-5 text-dark text-decoration-none">
-                            <Image className='brand-logo' src={BrandLogo} alt='iSTAD Reading Logo' />
+							<Image
+								className="brand-logo"
+								src={BrandLogo}
+								alt="iSTAD Reading Logo"
+							/>
 						</Link>
 
 						<ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 							<li>
-								<Link to={'/latest-book'} className="nav-link px-2 link-secondary">
+								<Link
+									to={'/latest-book'}
+									className="nav-link px-2 link-secondary">
 									Latest Books
 								</Link>
 							</li>
@@ -51,14 +62,45 @@ const MainNavbar = () => {
 						</form>
 
 						<ul className="nav col-12 col-lg-auto mb-2 mb-md-0">
-							<li className="d-flex align-items-center">
-								<PersonCircle />
-								<Link to={'/login'} className="nav-link px-2 link-secondary">Log in</Link>
-							</li>
-							<li className="d-flex align-items-center">
-								<DoorOpenFill />
-								<Link to={'/register'} className="nav-link px-2 link-secondary">Register</Link>
-							</li>
+							{isLoggedIn ? (
+								<>
+									<li className="d-flex align-items-center">
+										<DoorOpenFill />
+										<Link
+											to={'/profile'}
+											className="nav-link px-2 link-secondary">
+											{auth.user.username}
+										</Link>
+									</li>
+									<li className="d-flex align-items-center">
+										<DoorOpenFill />
+										<Link
+											to={'/logout'}
+											className="nav-link px-2 link-secondary">
+											Logout
+										</Link>
+									</li>
+								</>
+							) : (
+								<>
+									<li className="d-flex align-items-center">
+										<PersonCircle />
+										<Link
+											to={'/login'}
+											className="nav-link px-2 link-secondary">
+											Log in
+										</Link>
+									</li>
+									<li className="d-flex align-items-center">
+										<DoorOpenFill />
+										<Link
+											to={'/register'}
+											className="nav-link px-2 link-secondary">
+											Register
+										</Link>
+									</li>
+								</>
+							)}
 						</ul>
 
 						{/* <div className="dropdown text-end">
@@ -101,7 +143,6 @@ const MainNavbar = () => {
 								</li>
 							</ul>
 						</div> */}
-
 					</div>
 				</div>
 			</header>

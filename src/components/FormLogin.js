@@ -1,11 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap'
-import secureLocalStorage from 'react-secure-storage'
-import { login } from '../services/authService'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../services/actions/authAction'
 
 const FormLogin = (props) => {
 
 	const [loggedInRequest, setLoggedInRequest] = useState({})
+	
+	const { isLoggedIn } = useSelector(state => state.AUTH_REDUCER)
+
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		console.log(isLoggedIn)
+	}, [isLoggedIn])
+
 
 	const changeValueHandler = (e) => {
 		const { name, value } = e.target
@@ -21,12 +30,11 @@ const FormLogin = (props) => {
 
 		e.preventDefault()
 
-		console.log(loggedInRequest)
-
-		login(loggedInRequest).then(json => {
-			secureLocalStorage.setItem('authHeader', json.data.authHeader)
-			console.log(secureLocalStorage.getItem('authHeader'))
+		dispatch(login(loggedInRequest))
+		.then(() => {
+			console.log('Login successfully..!')
 		})
+		
 	}
 
 	return (
