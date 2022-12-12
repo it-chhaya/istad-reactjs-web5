@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { login, register } from '../services/authService'
+import { useNavigate } from 'react-router-dom'
+import { register, sendEmailVerification } from '../services/authService'
+import { uploadFile } from '../services/fileService'
 
 const FormRegister = () => {
-
+	const navigate = useNavigate()
+	const [file, setFile] = useState({})
 	const [data, setData] = useState({})
 
 	const onValueChangeHandler = (e) => {
@@ -20,13 +23,31 @@ const FormRegister = () => {
 	const onRegisterHandler = (e) => {
 		e.preventDefault()
 
-		data.profileId = 167
 		data.roleIds = [3]
 
-		console.log(data)
+		let formData = new FormData()
+		formData.append('file', file)
 
-		register(data)
-		login(data)
+		uploadFile(formData).then((json) => {
+			console.log(json)
+			if (json.code === 200) {
+				data.profileId = json.data.id
+				register(data).then((json) => {
+					console.log(json)
+					if (json.code === 200) {
+						sendEmailVerification({ email: json.data.email }).then((json) => {
+							if (json.code === 200) {
+								navigate('/login', { state: { message: json.message } })
+							}
+						})
+					}
+				})
+			}
+		})
+	}
+
+	const onFileChangeHandler = (e) => {
+		setFile(e.target.files[0])
 	}
 
 	return (
@@ -120,13 +141,17 @@ const FormRegister = () => {
 							className="mb-3"
 							controlId="exampleForm.ControlTextarea1">
 							<Form.Label>Biography</Form.Label>
-							<Form.Control name="biography"
-								onChange={onValueChangeHandler} as="textarea" rows={4} />
+							<Form.Control
+								name="biography"
+								onChange={onValueChangeHandler}
+								as="textarea"
+								rows={4}
+							/>
 						</Form.Group>
 
 						<Form.Group controlId="formFile" className="mb-3">
 							<Form.Label>Profile</Form.Label>
-							<Form.Control type="file" />
+							<Form.Control onChange={onFileChangeHandler} type="file" />
 						</Form.Group>
 					</Col>
 				</Row>

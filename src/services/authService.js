@@ -1,17 +1,29 @@
-export const register = (data) => {
-    fetch(`https://api-reading.istad.co/api/v1/auth/register`, {
+import { BASE_URL } from "./constants"
+
+export const register = async (data) => {
+
+    const response = await fetch(`${BASE_URL}auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(json => {
-        console.log(json)
-    })
+
+    return response.json()
 }
 
-export const login = (data) => {
-    console.log(data)
+export const sendEmailVerification = async (emailRequest) => {
+
+    console.log(emailRequest)
+
+    const response = await fetch(`${BASE_URL}auth/send-email-confirmation`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(emailRequest)
+    })
+
+    return response.json()
 }
