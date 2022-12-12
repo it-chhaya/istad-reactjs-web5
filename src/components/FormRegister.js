@@ -20,7 +20,15 @@ const FormRegister = () => {
 		})
 	}
 
+	const changeFileHandler = (e) => {
+		const formData = new FormData()
+		formData.append('file', e.target.files[0])
+
+		uploadFile(formData).then((json) => (data.profileId = json.data.id))
+	}
+
 	const onRegisterHandler = (e) => {
+
 		e.preventDefault()
 
 		data.roleIds = [3]

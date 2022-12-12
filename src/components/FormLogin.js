@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Button, Col, Container, Form, Row } from 'react-bootstrap'
+import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../services/actions/authAction'
 
-const FormLogin = () => {
+const FormLogin = (props) => {
 
 	const navigate = useNavigate()
 	const [loggedInRequest, setLoggedInRequest] = useState({})
@@ -48,6 +48,19 @@ const FormLogin = () => {
 
 	return (
 		<Container>
+
+			{
+				props.isRegister && (
+					<Row className='justify-content-center'>
+						<Col md={6}>
+							<Alert variant='danger'>
+								Please check your email and click verify..!
+							</Alert>
+						</Col>
+					</Row>
+				)
+			}
+
 			<Row className='justify-content-center'>
 				<Col md={6}>
 					<Form onSubmit={onFormSubmitHandler}>
