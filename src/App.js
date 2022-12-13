@@ -10,14 +10,23 @@ import Genre from './pages/Genre';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import Register from './pages/Register';
+import Protected from './pages/Protected';
+import { useSelector } from 'react-redux';
 
 function App() {
+
+  const {isLoggedIn} = useSelector(state => state.AUTH_REDUCER)
+
   return (
     <div>
       <MainNavbar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/latest-book' element={<LatestBook />} />
+        <Route path='/latest-book' element={
+          <Protected isLoggedIn={isLoggedIn}>
+            <LatestBook />
+          </Protected>
+        } />
         <Route path='/genres' element={<Genre />} />
         <Route path='/about-us' element={<AboutUs />} />
         <Route path='/contact-us' element={<ContactUs />} />
