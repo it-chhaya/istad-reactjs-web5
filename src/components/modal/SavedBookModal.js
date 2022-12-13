@@ -7,6 +7,7 @@ import { setSavedBookModalStatus } from '../../services/actions/modalAction'
 import { uploadFile } from '../../services/fileService'
 
 const SavedBookModal = () => {
+	
 	const [bookRequest, setBookRequest] = useState({})
 	const [cover, setCover] = useState({})
 	const [genreIds, setGenreIds] = useState([])

@@ -23,6 +23,7 @@ function App() {
         <Route path='/contact-us' element={<ContactUs />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='*' element={<Login />}/>
       </Routes>
       <MainFooter />
     </div>
