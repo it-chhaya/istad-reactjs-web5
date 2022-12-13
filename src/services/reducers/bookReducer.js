@@ -1,4 +1,4 @@
-import { FETCH_BOOKS } from "../actions/actionTypes"
+import { FETCH_BOOKS, SAVE_BOOK } from "../actions/actionTypes"
 
 const initializedState = {
     data: null
@@ -13,6 +13,10 @@ const bookReducer = (state = initializedState, action) => {
             return {
                 ...state,
                 data: payload
+            }
+        case SAVE_BOOK:
+            return {
+                
             }
         default:
             return state

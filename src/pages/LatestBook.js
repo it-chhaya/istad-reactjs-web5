@@ -1,9 +1,11 @@
 import { useEffect } from "react"
-import { Col, Container, Row } from "react-bootstrap"
+import { Button, Col, Container, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import BookCard from "../components/bookcard/BookCard"
 import MainPagination from "../components/MainPagination"
+import SavedBookModal from "../components/modal/SavedBookModal"
 import { fetchBooks } from "../services/actions/bookAction"
+import { setSavedBookModalStatus } from "../services/actions/modalAction"
 
 const LatestBook = () => {
 
@@ -11,14 +13,24 @@ const LatestBook = () => {
     const {data} = useSelector(state => state.BOOK_REDUCER)
 
     useEffect(() => {
-        dispatch(fetchBooks(1, 3))
+        dispatch(fetchBooks(1, 10))
         .then(() => {
             console.log('Fetch books successfully')
         })
     }, [])
 
+    const addNewBookHandler = () => {
+        dispatch(setSavedBookModalStatus(true))
+    }
+
     return (
         <Container>
+            <Row className="mb-2">
+                <Col>
+                    <Button onClick={addNewBookHandler}>Add new book</Button>
+                    <SavedBookModal/>
+                </Col>
+            </Row>
             <Row>
                 {
                     data && data.list.map(book => (
@@ -31,6 +43,9 @@ const LatestBook = () => {
             <Row className="justify-content-center">
                 <Col md={6}>
                     <MainPagination
+                        prePage={data && data.prePage}
+                        nextPage={data && data.nextPage}
+                        isLastPage={data && data.isLastPage}
                         isFirstPage={data && data.isFirstPage}
                         pageNum={data && data.pageNum}
                         navigatepageNums={data && data.navigatepageNums} />

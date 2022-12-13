@@ -1,6 +1,41 @@
 import secureLocalStorage from "react-secure-storage"
 import { BASE_URL } from "../constants"
-import { FETCH_BOOKS } from "./actionTypes"
+import { FETCH_BOOKS, SAVE_BOOK } from "./actionTypes"
+
+export const removeBookById = (id) => {
+    return (dispatch) => {
+        return fetch(`${BASE_URL}books/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': secureLocalStorage.getItem('auth').authHeader,
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            return Promise.resolve()
+        })
+    }
+}
+
+export const postBook = (bookRequest) => {
+    return (dispatch) => {
+        return fetch(`${BASE_URL}books`, {
+            method: 'POST',
+            headers: {
+                'Authorization': secureLocalStorage.getItem('auth').authHeader,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bookRequest)
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            return Promise.resolve()
+        })
+    }
+}
 
 export const fetchBooks = (pageNum, pageSize) => {
     const authHeader = secureLocalStorage.getItem('auth').authHeader

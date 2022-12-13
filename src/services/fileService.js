@@ -5,7 +5,7 @@ export const uploadFile = async (formData) => {
     const response = await fetch(`${BASE_URL}files`, {
         method: 'POST',
         headers: {
-            Authorization: 'Basic Y2hhbmNoaGF5YTojQ2hoYXlhMTA='
+            Authorization: 'Basic YWRtaW46I0NoaGF5YTEw'
         },
         body: formData
     })
