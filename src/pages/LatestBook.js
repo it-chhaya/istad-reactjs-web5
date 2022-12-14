@@ -6,6 +6,7 @@ import MainPagination from "../components/MainPagination"
 import SavedBookModal from "../components/modal/SavedBookModal"
 import { fetchBooks } from "../services/actions/bookAction"
 import { setSavedBookModalStatus } from "../services/actions/modalAction"
+import { INIT_PAGE_NUM, INIT_PAGE_SIZE } from "../services/constants"
 
 const LatestBook = () => {
 
@@ -13,7 +14,7 @@ const LatestBook = () => {
     const {data} = useSelector(state => state.BOOK_REDUCER)
 
     useEffect(() => {
-        dispatch(fetchBooks(1, 10))
+        dispatch(fetchBooks(INIT_PAGE_NUM, INIT_PAGE_SIZE))
         .then(() => {
             console.log('Fetch books successfully')
         })

@@ -1,6 +1,7 @@
 import { Pagination } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { fetchBooks } from '../services/actions/bookAction'
+import { INIT_PAGE_SIZE } from '../services/constants'
 
 const MainPagination = ({
 	navigatepageNums,
@@ -17,21 +18,21 @@ const MainPagination = ({
 		let requestPage = e.target.textContent
 
 		// Dispatch action to actionHandler
-		dispatch(fetchBooks(requestPage, 3)).then(() => {
+		dispatch(fetchBooks(requestPage, INIT_PAGE_SIZE)).then(() => {
 			console.log('Fetch books successfully')
 		})
 	}
 
 	const requestPrevPageHandler = (e) => {
 		// Dispatch action to actionHandler
-		dispatch(fetchBooks(prePage, 3)).then(() => {
+		dispatch(fetchBooks(prePage, INIT_PAGE_SIZE)).then(() => {
 			console.log('Fetch books successfully')
 		})
 	}
 
 	const requestNextPageHandler = (e) => {
 		// Dispatch action to actionHandler
-		dispatch(fetchBooks(nextPage, 3)).then(() => {
+		dispatch(fetchBooks(nextPage, INIT_PAGE_SIZE)).then(() => {
 			console.log('Fetch books successfully')
 		})
 	}

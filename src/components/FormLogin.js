@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../services/actions/authAction'
 
@@ -47,7 +47,7 @@ const FormLogin = (props) => {
 	}
 
 	return (
-		<Container>
+		<Container className='mt-5'>
 
 			{
 				props.isRegister && (
@@ -62,7 +62,7 @@ const FormLogin = (props) => {
 			}
 
 			<Row className='justify-content-center'>
-				<Col md={6}>
+				<Col md={6} className='shadow-lg rounded p-5'>
 					<Form onSubmit={onFormSubmitHandler}>
 						<Form.Group className="mb-3" controlId="formBasicUsernameOrEmail">
 							<Form.Label>Username or Email</Form.Label>
@@ -77,9 +77,16 @@ const FormLogin = (props) => {
 						<Button variant="primary" type="submit">
 							Log in
 						</Button>
+						<div className='mt-2'>
+							<Link to={'/'}>Back to home</Link>
+							&nbsp;|&nbsp;
+							<Link to={'/register'}>Do you have an account?</Link>
+						</div>
 					</Form>
 				</Col>
 			</Row>
+
+
 		</Container>
 	)
 }

@@ -37,10 +37,10 @@ export const postBook = (bookRequest) => {
     }
 }
 
-export const fetchBooks = (pageNum, pageSize) => {
+export const fetchBooks = (pageNum, pageSize, search = '') => {
     const authHeader = secureLocalStorage.getItem('auth').authHeader
     return (dispatch) => {
-        return fetch(`${BASE_URL}books?pageNum=${pageNum}&pageSize=${pageSize}`, {
+        return fetch(`${BASE_URL}books?pageNum=${pageNum}&pageSize=${pageSize}&title=${search}&author=${search}`, {
             method: 'GET',
             headers: {
                 Authorization: authHeader

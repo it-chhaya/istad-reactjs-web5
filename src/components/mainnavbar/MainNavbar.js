@@ -1,11 +1,13 @@
 import './MainNavbar.css'
-import { Container, Image } from 'react-bootstrap'
+import { Button, Container, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import BrandLogo from '../../assets/brandlogo/book-logo.svg'
 import { DoorOpenFill, PersonCircle } from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../services/actions/authAction'
 import secureLocalStorage from 'react-secure-storage'
+import { fetchBooks } from '../../services/actions/bookAction'
+import { INIT_PAGE_NUM, INIT_PAGE_SIZE } from '../../services/constants'
 
 const MainNavbar = () => {
 
@@ -16,6 +18,13 @@ const MainNavbar = () => {
 	const onLogoutHandler = () => {
 		dispatch(logout())
 		.then(() => console.log('Logout successfully!'))
+	}
+
+	const onSearch = (e) => {
+		if (e.keyCode === 13) {
+			let search = e.target.value
+			dispatch(fetchBooks(INIT_PAGE_NUM, INIT_PAGE_SIZE, search))
+		}
 	}
 
 	return (
@@ -58,16 +67,14 @@ const MainNavbar = () => {
 							</li>
 						</ul>
 
-						<form
-							className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
-							role="search">
-							<input
+						<input
+								onKeyDown={onSearch}
 								type="search"
+								style={{width: 'auto'}}
 								className="form-control"
 								placeholder="Search..."
 								aria-label="Search"
 							/>
-						</form>
 
 						{isLoggedIn ? (
 							<ul className="nav col-12 col-lg-auto mb-2 mb-md-0">
